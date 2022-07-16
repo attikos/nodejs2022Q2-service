@@ -15,14 +15,31 @@ import { ArtistModule } from './artist/artist.module';
 import { ArtistController } from 'src/artist/artist.controller';
 import { ArtistService } from 'src/artist/artist.service';
 
+import { TrackModule } from './track/track.module';
+import { TrackController } from 'src/track/track.controller';
+import { TrackService } from 'src/track/track.service';
+
 @Module({
-  imports: [ConfigModule.forRoot(), UserModule, AlbumModule, ArtistModule],
+  imports: [
+    ConfigModule.forRoot(),
+    UserModule,
+    AlbumModule,
+    ArtistModule,
+    TrackModule,
+  ],
   controllers: [
     AppController,
     UserController,
     AlbumController,
     ArtistController,
+    TrackController,
   ],
-  providers: [AppService, UserService, AlbumService, ArtistService],
+  providers: [
+    AppService,
+    UserService,
+    AlbumService,
+    ArtistService,
+    TrackService,
+  ],
 })
 export class AppModule {}

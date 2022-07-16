@@ -2,12 +2,14 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
-  ForbiddenException,
+  Inject,
+  forwardRef,
 } from '@nestjs/common';
 import { CreateArtistDto } from 'src/artist/dto/create-artist.dto';
 import { v4, validate } from 'uuid';
 import { artistDB } from 'src/artist/artist.db';
 import { UpdateArtistDto } from 'src/artist/dto/update-artist.dto';
+// import { TrackService } from 'src/track/track.service';
 
 const checkValidation = (id: string) => {
   if (!validate(id)) {
@@ -17,6 +19,8 @@ const checkValidation = (id: string) => {
 
 @Injectable()
 export class ArtistService {
+  // constructor() {} // private readonly trackService: TrackService, // @Inject(forwardRef(() => TrackService))
+
   create(data: CreateArtistDto) {
     const { name, grammy } = data || {};
 
@@ -87,6 +91,10 @@ export class ArtistService {
     if (artistIndex === -1) {
       throw new NotFoundException('Artist not found');
     }
+
+    // new TrackService().delete(id);
+
+    // this.trackService.delete(id);
 
     artistDB.splice(artistIndex, 1);
   }

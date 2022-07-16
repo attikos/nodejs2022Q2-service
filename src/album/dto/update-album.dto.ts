@@ -10,5 +10,5 @@ export class UpdateAlbumDto {
   year: number;
 
   @Allow()
-  artistId?: string;
+  artistId: string | null;
 }

@@ -63,8 +63,6 @@ export class ArtistController {
   @Delete(':artistId')
   @HttpCode(204)
   delete(@Param() { artistId }) {
-    this.artistService.delete(artistId);
-
-    return;
+    return this.artistService.delete(artistId);
   }
 }
