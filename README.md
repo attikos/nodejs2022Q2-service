@@ -5,13 +5,19 @@
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
 
+Requred Node v. 16 or more.
+
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone https://github.com/attikos/nodejs2022Q2-service/tree/develop
 ```
 
 ## Installing NPM modules
+
+```
+git checkout develop
+```
 
 ```
 npm install
