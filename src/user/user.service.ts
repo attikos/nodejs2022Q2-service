@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { v4, validate } from 'uuid';
-import { userDB } from 'src/db/user.db';
+import { userDB } from 'src/user/user.db';
 import { UpdateUserDto } from 'src/user/dto/update-user.dto';
 
 const checkValidation = (id: string) => {
