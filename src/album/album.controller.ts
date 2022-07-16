@@ -42,9 +42,6 @@ export class AlbumController {
   @Post()
   @HttpCode(201)
   create(@Param() params, @Body() createAlbumDto: CreateAlbumDto) {
-    console.log('createAlbumDto', createAlbumDto);
-    console.log('params', params);
-
     const album = this.albumService.create(createAlbumDto);
 
     return new AlbumEntity(album);

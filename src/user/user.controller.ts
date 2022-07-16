@@ -41,9 +41,6 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   create(@Param() params, @Body() createUserDto: CreateUserDto) {
-    console.log('createUserDto', createUserDto);
-    console.log('params', params);
-
     const user = this.userService.create(createUserDto);
 
     return new UserEntity(user);
