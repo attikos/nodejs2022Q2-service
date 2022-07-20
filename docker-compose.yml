@@ -1,0 +1,43 @@
+version: "3.7"
+
+services:
+  db:
+    ports:
+      - 9432:5432
+    build:
+      context: .
+      dockerfile: ./docker/images/postgres/dockerfile
+    image: attikos/postgres-13.7:latest
+    container_name: postgres
+    hostname: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - my_network
+    volumes:
+      - ./db/volume:/var/lib/postgresql/data
+    restart: on-failure
+
+  node:
+    build:
+      context: .
+      dockerfile: ./docker/images/node/dockerfile
+    image: attikos/node:16.15.1
+    ports:
+      - 4000:4000
+    container_name: npm-start
+    working_dir: /app
+    volumes:
+      - ./:/app:rw
+    # command: bash -c "npm install --no-save"
+    command: "npm install --no-save"
+    # entrypoint: "/true"
+    entrypoint: npm run start:dev
+    networks:
+      - my_network
+    restart: on-failure
+
+networks:
+  my_network:
+    driver: bridge

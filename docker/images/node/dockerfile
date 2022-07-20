@@ -1,0 +1,16 @@
+FROM node:16.15.1-alpine
+
+RUN apk update && apk add bash
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+CMD bash # If you want to override CMD
+
+WORKDIR /app
+
+COPY package*.json ./
+# COPY ./src .
+
+RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
+
+RUN npm install
+
+# CMD npm run start
