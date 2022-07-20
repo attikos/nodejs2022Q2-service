@@ -31,8 +31,9 @@ services:
     volumes:
       - ./:/app:rw
     # command: bash -c "npm install --no-save"
+    command: "npm install --no-save"
     # entrypoint: "/true"
-    entrypoint: "npm run start:dev"
+    entrypoint: npm run start:dev
     networks:
       - my_network
     restart: on-failure
