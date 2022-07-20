@@ -17,6 +17,7 @@ services:
       - my_network
     volumes:
       - ./db/volume:/var/lib/postgresql/data
+    restart: alwais
 
   node:
     build:
@@ -31,9 +32,10 @@ services:
       - ./:/app:rw
     # command: bash -c "npm install --no-save"
     # entrypoint: "/true"
-    entrypoint: "npm run start"
+    entrypoint: "npm run start:dev"
     networks:
       - my_network
+    restart: alwais
 
 networks:
   my_network:
