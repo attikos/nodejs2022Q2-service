@@ -7,7 +7,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/images/postgres/dockerfile
-    image: postgres-13.7
+    image: attikos/postgres-13.7:latest
     container_name: postgres
     hostname: postgres
     environment:
@@ -17,13 +17,13 @@ services:
       - my_network
     volumes:
       - ./db/volume:/var/lib/postgresql/data
-    restart: alwais
+    restart: on-failure
 
   node:
     build:
       context: .
       dockerfile: ./docker/images/node/dockerfile
-    image: node:16.15.1
+    image: attikos/node:16.15.1
     ports:
       - 4000:4000
     container_name: npm-start
@@ -35,7 +35,7 @@ services:
     entrypoint: "npm run start:dev"
     networks:
       - my_network
-    restart: alwais
+    restart: on-failure
 
 networks:
   my_network:
