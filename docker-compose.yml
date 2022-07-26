@@ -2,20 +2,31 @@ version: "3.7"
 
 services:
   db:
-    ports:
-      - 9432:5432
     build:
       context: .
       dockerfile: ./docker/images/postgres/dockerfile
     image: attikos/postgres-13.7:latest
     container_name: postgres
-    hostname: postgres
+    env_file:
+      - .env
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      # PGUSER: ${PGUSER}
+      # PGPASSWORD: ${PGPASSWORD}
+      # PGDATABASE: ${PGDATABASE}
+      PGPORT: ${POSTGRES_PORT}
+      # PGHOST: ${PGHOST}
+    hostname: postgres
     networks:
       - my_network
     volumes:
+      - ./db/sql:/docker-entrypoint-initdb.d/
       - ./db/volume:/var/lib/postgresql/data
     restart: on-failure
 
@@ -24,8 +35,10 @@ services:
       context: .
       dockerfile: ./docker/images/node/dockerfile
     image: attikos/node:16.15.1
+    env_file:
+      - .env
     ports:
-      - 4000:4000
+     - "${PORT}:${PORT}"
     container_name: npm-start
     working_dir: /app
     volumes:
