@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import configService from './ormconfig';
 
 import { UserModule } from './user/user.module';
 import { UserController } from 'src/user/user.controller';
@@ -21,7 +23,8 @@ import { TrackService } from 'src/track/track.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '../.env' }),
+    TypeOrmModule.forRoot(configService),
     UserModule,
     AlbumModule,
     ArtistModule,
@@ -29,14 +32,14 @@ import { TrackService } from 'src/track/track.service';
   ],
   controllers: [
     AppController,
-    UserController,
+    // UserController,
     AlbumController,
     ArtistController,
     TrackController,
   ],
   providers: [
     AppService,
-    UserService,
+    // UserService,
     AlbumService,
     ArtistService,
     TrackService,

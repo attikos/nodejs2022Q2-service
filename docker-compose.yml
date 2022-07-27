@@ -22,7 +22,7 @@ services:
       # PGDATABASE: ${PGDATABASE}
       PGPORT: ${POSTGRES_PORT}
       # PGHOST: ${PGHOST}
-    hostname: postgres
+    hostname: ${POSTGRES_HOST}
     networks:
       - my_network
     volumes:
@@ -39,6 +39,10 @@ services:
       - .env
     ports:
      - "${PORT}:${PORT}"
+    links:
+      - db
+    # environment:
+    #   DATABASE_HOST: ${POSTGRES_HOST}
     container_name: npm-start
     working_dir: /app
     volumes:

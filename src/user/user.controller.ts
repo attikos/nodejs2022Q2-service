@@ -23,35 +23,27 @@ export class UserController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   @HttpCode(200)
-  getAll() {
-    const users = this.userService.getAll();
-
-    return users.map((user) => new UserEntity(user));
+  findAll() {
+    return this.userService.findAll();
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':userId')
   @HttpCode(200)
-  getById(@Param() { userId }) {
-    const users = this.userService.getById(userId);
-
-    return new UserEntity(users);
+  findOne(@Param() { userId }) {
+    return this.userService.findOne(userId);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   create(@Param() params, @Body() createUserDto: CreateUserDto) {
-    const user = this.userService.create(createUserDto);
-
-    return new UserEntity(user);
+    return this.userService.create(createUserDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':userId')
   update(@Param() { userId }, @Body() updateUserDto: UpdateUserDto) {
-    const user = this.userService.update(userId, updateUserDto);
-
-    return new UserEntity(user);
+    return this.userService.update(userId, updateUserDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -60,11 +52,9 @@ export class UserController {
     throw new BadRequestException('Id is not valid');
   }
 
-  @Delete(':userId')
   @HttpCode(204)
+  @Delete(':userId')
   delete(@Param() { userId }) {
-    this.userService.delete(userId);
-
-    return;
+    return this.userService.delete(userId);
   }
 }
