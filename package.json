@@ -18,7 +18,8 @@
     "test:auth": "cross-env TEST_MODE=auth jest --config ./test/jest-e2e.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/ormconfig.ts"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
