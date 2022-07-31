@@ -2,21 +2,20 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
-  //   ForbiddenException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { UserDto } from 'src/user/dto/user.dto';
-// import { v4, validate } from 'uuid';
-// import { userDB } from 'src/user/user.db';
+import { validate } from 'uuid';
 import { UpdateUserDto } from 'src/user/dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 
-// const checkValidation = (id: string) => {
-//   if (!validate(id)) {
-//     throw new BadRequestException('Id is not valid');
-//   }
-// };
+const checkValidation = (id: string) => {
+  if (!validate(id)) {
+    throw new BadRequestException('Id is not valid');
+  }
+};
 
 @Injectable()
 export class UserService {
@@ -40,6 +39,8 @@ export class UserService {
   }
 
   async findOne(userId: string) {
+    checkValidation(userId);
+
     const user = await this.userRepository.findOne({ where: { id: userId } });
 
     if (user) {
@@ -50,19 +51,17 @@ export class UserService {
   }
 
   async update(userId: string, userDto: UpdateUserDto) {
-    // if (userDto.id) {
-    //   delete userDto.id;
-    // }
+    checkValidation(userId);
 
     const updatedUser = await this.userRepository.findOne({
       where: { id: userId },
     });
 
-    // if (userDto.id !== updatedUser.id) {
-    //   await this.isloginExists(userDto.login);
-    // }
-
     if (updatedUser) {
+      if (updatedUser.password !== userDto.oldPassword) {
+        throw new ForbiddenException('Wrong old password');
+      }
+
       Object.assign(updatedUser, userDto);
 
       return await this.userRepository.save(updatedUser);
