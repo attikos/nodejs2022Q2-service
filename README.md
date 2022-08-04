@@ -1,4 +1,4 @@
-# Home Library Service - Containerization
+# Home Library Service - Authentication
 
 ## Prerequisites
 
